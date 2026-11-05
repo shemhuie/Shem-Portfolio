@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f9ff"><meta name="description" content="Shem's digital playground. Thoughtful interfaces, creative development, and interactive experiments.">
+<title>Shem — Creative Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link rel="stylesheet" href="./style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+<script defer src="./app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="app" v-cloak>
+<header class="header">
+<a class="logo" href="#" aria-label="Shem home">shem<span class="logo-dot">.</span></a>
+<nav class="desktop-nav" aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#playground">Playground</a></nav>
+<a class="nav-contact" href="#contact">Let’s talk <span>↗</span></a>
+<button class="menu-button" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-controls="mobile-nav">{{ menuOpen ? 'Close' : 'Menu' }}</button>
+<nav v-if="menuOpen" id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation"><a v-for="item in ['Work','About','Playground','Contact']" :href="'#'+item.toLowerCase()" @click="menuOpen=false">{{item}} ↗</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+<div class="hero-content relative z-10">
+<div class="eyebrow"><span class="status-dot"></span> SHEM / CREATIVE DEVELOPER</div>
+<h1>Thoughtful design.<br><span class="blue-word">Playful code<span class="pink-period">.</span></span></h1>
+<p class="hero-description">I build expressive websites and interactive experiences, with care for the details that make them feel different.</p>
+<div class="hero-actions"><a href="#work" class="button button-blue">Explore my work <span>↗</span></a><a href="#about" class="text-link">A little about me <span>→</span></a></div>
+</div>
+<div class="hero-art">
+<span class="art-coordinate top-coordinate"><span class="live-dot"></span> LIVE EXPERIMENT <span>001 / FLOW FIELD</span></span>
+<div id="scene" role="img" aria-label="Flowing blue and pink lines forming a digital landscape. Move your pointer to gently bend the waves."></div>
+<div class="scene-title" aria-hidden="true">Ideas in<br><em>motion.</em></div>
+<div class="art-caption"><span class="small-cross">+</span><span>MOVE TO EXPLORE</span><button @click="toggleMotion" :aria-pressed="paused" aria-label="Pause or resume animation">{{ paused ? '▶' : 'Ⅱ' }}</button></div>
+</div>
+<div class="hero-bottom"><span>DESIGN MINDED. DETAIL DRIVEN.</span><a href="#work">SCROLL TO EXPLORE <span>↓</span></a></div>
+</section>
+<div class="tech-strip"><span class="strip-caption">MY DIGITAL TOOLBOX</span><span>Vue.js</span><span class="strip-star">✳</span><span>JavaScript</span><span class="strip-star">✳</span><span>Tailwind CSS</span><span class="strip-star">✳</span><span>Three.js</span><span class="strip-star">✳</span><span>HTML & CSS</span></div>
+<section id="work" class="section work-section">
+<div class="section-heading"><div><div class="eyebrow">01 / SELECTED WORK</div><h2>Selected <span class="serif-word">explorations.</span></h2></div><p>Experiments in interface, identity, and interaction.<br>Three concepts. Three different directions.</p></div>
+<div class="filter-row" role="group" aria-label="Filter projects"><button v-for="filter in filters" @click="activeFilter=filter" :class="{active:activeFilter===filter}" :aria-pressed="activeFilter===filter">{{filter}}<span v-if="filter==='All work'">03</span></button><span class="concept-note">CONCEPT SHOWCASE / SAMPLE PROJECTS</span></div>
+<div class="project-grid">
+<article v-for="project in filteredProjects" :key="project.id" class="project-card min-w-0">
+<button class="project-image" :class="project.theme" @click="selectedProject=project" :aria-label="'Explore '+project.title">
+<template v-if="project.id===1"><div class="mock-window"><div class="mock-top"><b>orbit<span>®</span></b><span>Platform &nbsp; Solutions &nbsp; ↗</span></div><div class="orbit-copy">Your money.<br><em>In a better orbit.</em></div><div class="mini-button">Find your flow ↗</div><div class="finance-card"><span>TOTAL BALANCE</span><strong>£24,680<span>.00</span></strong><div class="mini-chart"><i v-for="n in 12" :style="{height:(15+(n*13)%57)+'px'}"></i></div><small>↗ Your next chapter starts here</small></div></div></template>
+<template v-else-if="project.id===2"><div class="studio-mock"><div class="studio-top">FORMA® <span>OBJECTS FOR EVERYDAY</span></div><div class="studio-title">Less, but<br><em>better.</em></div><div class="vase"><div></div></div><span class="studio-bottom">THOUGHTFULLY MADE. BEAUTIFULLY SIMPLE. &nbsp; ↗</span></div></template>
+<template v-else><div class="wave-mock"><span>WAVELENGTH / EXPERIMENT 003</span><div class="wave-rings"><i v-for="n in 6" :style="{'--i':n}"></i></div><strong>Find your<br><em>frequency.</em></strong><small>AN EXPLORATION IN MOTION &nbsp; ↗</small></div></template>
+<span class="project-open">↗</span>
+</button>
+<div class="project-meta"><div><h3>{{project.title}}</h3><p>{{project.category}} <span>·</span> {{project.subtitle}}</p></div><span class="project-number">0{{project.id}}</span></div>
+</article>
+</div>
+</section>
+<section id="about" class="section about-section">
+<div><div class="eyebrow">02 / THE PERSON BEHIND THE PIXELS</div><h2>A curious mind.<br>A <span class="serif-word">builder at heart.</span></h2><div class="about-doodle">code <span>+</span> curiosity <span>=</span> <b>✳</b></div></div>
+<div class="about-copy"><p>I’m Shem. I like making things for the web that feel as good as they look.</p><p>For me, the interesting part is where design meets development: a small interaction, an unexpected detail, or a simple idea that becomes something you can actually use.</p><p>This is my corner of the internet to experiment, learn, and share what I’m making along the way.</p><div class="skill-tags flex flex-wrap"><span v-for="skill in ['Creative development','Interface design','Interactive experiences','Always learning']">{{skill}}</span></div></div>
+</section>
+<section id="playground" class="section playground-section"><div><div class="eyebrow">03 / ROOM TO PLAY</div><h2>A little less serious.<br>A little more <span class="serif-word">what if?</span></h2><p>A living landscape, drawn with code.<br>Pick a palette and make it your own.</p><div class="color-controls"><button v-for="color in colors" :style="{'--swatch':color.hex}" :class="{selected:activeColor===color.hex}" @click="changeColor(color.hex)" :aria-label="'Set flow field to '+color.name" :aria-pressed="activeColor===color.hex"></button><a href="#main" class="text-link">Explore the waves ↑</a></div></div><div class="play-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i><span>EXPERIMENT. ITERATE. REPEAT.</span></div></section>
+<section id="contact" class="contact-section"><div class="eyebrow">04 / LET’S MAKE SOMETHING GOOD</div><h2>Have an idea?<br>Let’s <span class="serif-word">make it happen.</span><span class="pink-period">↗</span></h2><p>Start with a hello. See where it goes.</p><button class="button button-white" @click="contactOpen=true">Start a conversation <span>↗</span></button><div class="contact-decoration" aria-hidden="true">✳</div></section>
+</main>
+<footer><a href="#" class="logo">shem<span class="logo-dot">.</span></a><span>DESIGNED &amp; BUILT BY SHEM</span><a href="#main">Back to top ↑</a><span>© {{year}} Shem</span></footer>
+<div v-if="selectedProject || contactOpen" class="modal-backdrop" @click.self="closeDialog" @keydown.esc="closeDialog">
+<section class="dialog" role="dialog" aria-modal="true" :aria-label="contactOpen?'Start a conversation':selectedProject.title" tabindex="-1" ref="dialog">
+<button class="dialog-close" @click="closeDialog" aria-label="Close dialog">×</button>
+<template v-if="contactOpen"><div class="eyebrow">SAY HELLO</div><h2>Good things start<br>with a conversation.</h2><p>Have a project in mind, a question, or an interesting idea? Let us start a conversation.</p><a v-if="contactEmail" class="button button-blue" :href="'mailto:'+contactEmail">Email Shem ↗</a><p v-else class="setup-note">Contact email coming soon.</p></template>
+<template v-else><div class="eyebrow">CONCEPT PROJECT / 0{{selectedProject.id}}</div><h2>{{selectedProject.title}}</h2><p>{{selectedProject.description}}</p><div class="skill-tags flex flex-wrap"><span v-for="tag in selectedProject.tags">{{tag}}</span></div><p class="setup-note">An illustrative portfolio concept. No live product is linked.</p></template>
+</section></div>
+</div>
+<noscript><p class="noscript">Please enable JavaScript to view Shem’s interactive portfolio.</p></noscript>
+</body>
+</html>
+
+
+
